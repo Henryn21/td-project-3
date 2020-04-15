@@ -37,12 +37,21 @@ colorList.appendChild(placeholder);
 //add listner to elements in design menu
 designList.addEventListener("change",(e)=>{
     //if design selected, show colors
-    if(event.target.value=="js puns"||event.target.value=="heart js"){
-        for(let i=0;i<colorList.length;i++){
+    //if puns, show only pun shirt colors
+    if(event.target.value=="js puns"){
+        for(let i=0;i<=2;i++){
             colorList[i].style.display="block";
         }
-        colorList.removeChild(placeholder);
+        colorList.removeChild(placeholder);//bugged
     }
+    //if heart, show only heart shirt colors
+    else if(event.target.value=="heart js"){
+        for(let i=3;i<colorList.length;i++){
+            colorList[i].style.display="block";
+        }
+        colorList.removeChild(placeholder);//bugged
+    }
+    //else hide colors
     else{
         for(let i=0;i<colorList.length;i++){
             colorList[i].style.display="none";
