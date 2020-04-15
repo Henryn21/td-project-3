@@ -47,7 +47,10 @@ designList.addEventListener("change",(e)=>{
         for(let i=3;i<colorList.length;i++){
             colorList[i].style.display="none";
         }
-        colorList.removeChild(placeholder);//bugged
+        //remove placeholder if present
+        if(colorList.contains(placeholder)){
+            colorList.removeChild(placeholder);
+        }
     }
     //if heart, show only heart shirt colors
     else if(event.target.value=="heart js"){
@@ -58,8 +61,10 @@ designList.addEventListener("change",(e)=>{
         for(let i=0;i<=2;i++){
             colorList[i].style.display="none";
         }
-
-        colorList.removeChild(placeholder);//bugged
+        //remove placeholder if present
+        if(colorList.contains(placeholder)){
+            colorList.removeChild(placeholder);
+        }
     }
     //else hide colors
     else{
@@ -70,4 +75,39 @@ designList.addEventListener("change",(e)=>{
     }
 });
 
-//
+//Activities section
+
+let activities=document.querySelector(".activities");
+let checkboxes = document.querySelectorAll('.activities input');
+let totalCost=0;
+let costBox= document.createElement("p");
+activities.appendChild(costBox);
+activities.addEventListener('change', (e)=>{
+    let clicked=e.target;
+
+    //add cost
+    if(clicked.checked){
+        totalCost+=parseInt(clicked.getAttribute("data-cost"));
+    }
+    else{
+        totalCost-=parseInt(clicked.getAttribute("data-cost"));
+    }
+    //if two activities are at same time, hide them
+    for(let i=0;i<checkboxes.length;i++){
+        //if not same element
+        if(clicked!=checkboxes[i]){
+            //if time is same
+            if(checkboxes[i].getAttribute("data-day-and-time")==clicked.getAttribute("data-day-and-time")){
+                //if box clicked is checked, disable all other boxes
+                if(clicked.checked){
+                    checkboxes[i].disabled=true;
+                }
+                else{
+                    checkboxes[i].disabled=false;
+                }
+            }
+        }        
+    }
+    //display cost
+    costBox.innerText=(`Total: $${totalCost}`);
+});
