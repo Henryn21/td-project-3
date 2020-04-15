@@ -34,6 +34,7 @@ placeholder.textContent="Please select a T-shirt theme";
 placeholder.selected=true;
 colorList.appendChild(placeholder);
 
+
 //add listner to elements in design menu
 designList.addEventListener("change",(e)=>{
     //if design selected, show colors
@@ -42,6 +43,10 @@ designList.addEventListener("change",(e)=>{
         for(let i=0;i<=2;i++){
             colorList[i].style.display="block";
         }
+        //hide heart
+        for(let i=3;i<colorList.length;i++){
+            colorList[i].style.display="none";
+        }
         colorList.removeChild(placeholder);//bugged
     }
     //if heart, show only heart shirt colors
@@ -49,6 +54,11 @@ designList.addEventListener("change",(e)=>{
         for(let i=3;i<colorList.length;i++){
             colorList[i].style.display="block";
         }
+        //hide puns
+        for(let i=0;i<=2;i++){
+            colorList[i].style.display="none";
+        }
+
         colorList.removeChild(placeholder);//bugged
     }
     //else hide colors
