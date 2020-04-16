@@ -111,3 +111,106 @@ activities.addEventListener('change', (e)=>{
     //display cost
     costBox.innerText=(`Total: $${totalCost}`);
 });
+
+//payment info
+
+//information divs
+let creditCardInfo=document.querySelector("#credit-card");
+let paypalInfo=document.querySelector("#paypal");
+let bitcoinInfo=document.querySelector("#bitcoin");
+
+//display only selected, start on credit card
+
+creditCardInfo.style.display="block";
+paypalInfo.style.display="none";
+bitcoinInfo.style.display="none";
+
+document.querySelector("#payment").addEventListener("change", (e)=>{
+    if(e.target.value=="select method"){
+        creditCardInfo.style.display="none";
+        paypalInfo.style.display="none";
+        bitcoinInfo.style.display="none";
+    }
+    else if(e.target.value=="credit card"){
+        creditCardInfo.style.display="block";
+        paypalInfo.style.display="none";
+        bitcoinInfo.style.display="none";
+    }
+    else if(e.target.value=="paypal"){
+        creditCardInfo.style.display="none";
+        paypalInfo.style.display="block";
+        bitcoinInfo.style.display="none";
+    }
+    else if(e.target.value=="bitcoin"){
+        creditCardInfo.style.display="none";
+        paypalInfo.style.display="none";
+        bitcoinInfo.style.display="block";
+    }
+});
+
+//form validation
+let name=document.querySelector("#name");
+let email=document.querySelector("#mail");
+let activityError= document.createElement('p');
+//error p element, intially hidden
+activityError.textContent="Pick one or more activities";
+activityError.style.color="red";
+activityError.style.display="none";
+activities.appendChild(activityError);
+let cardNumber=document.querySelector("#cc-num");
+let ccRegex=/^[0-9]{13,16}$/;//13-16 numbers
+let zip=document.querySelector("#zip");
+let zipRegex=/^[0-9]{5}$/;//5 numbers
+let cvv=document.querySelector("#cvv");
+let cvvRegex=/^[0-9]{3}$/;//3 digits
+
+//regex starts with letter,then can include otters, has a @ followed by characters, a dot, then more lettersher charac
+let emailRegex=/^[a-zA-Z][a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]+$/;
+document.querySelector("form").addEventListener("submit", (e)=>{
+    e.preventDefault();
+    //name
+    if(name.value.length<1){
+        name.style.borderColor="red";
+    }
+    else{
+        name.style.borderColor="#9BBEEF"; 
+    }
+    //email
+    if(!emailRegex.test(email.value)){
+        email.style.borderColor="red";
+    }
+    else{
+        email.style.borderColor="#9BBEEF"; 
+    }
+    //activity
+    if(totalCost==0){
+        activityError.style.display="block";
+    }
+    else{
+        activityError.style.display="none";
+    }
+    //credit card
+    //card number
+    if(!ccRegex.test(cardNumber.value)){
+        cardNumber.style.borderColor="red";
+    }
+    else{
+        cardNumber.style.borderColor="#9BBEEF"; 
+    }
+    //zip
+    if(!zipRegex.test(zip.value)){
+        zip.style.borderColor="red";
+
+    }
+    else{
+        zip.style.borderColor="#9BBEEF"; 
+    }
+    //cvv
+    if(!cvvRegex.test(cvv.value)){
+        cvv.style.borderColor="red";
+
+    }
+    else{
+        cvv.style.borderColor="#9BBEEF"; 
+    }
+});
