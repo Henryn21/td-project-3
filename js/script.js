@@ -9,6 +9,7 @@ const hidden=document.querySelector("#other-title");
 const titleList= document.querySelector("#title");
 //attach listner to each element in list
 //if other, show hidden, else hide hidden
+hidden.style.display="none";
 titleList.addEventListener("change", (e)=>{
     if(event.target.value === other.value){
         hidden.style.display="block";
@@ -114,6 +115,10 @@ activities.addEventListener('change', (e)=>{
 
 //payment info
 
+//list
+let paymentOptions= document.querySelector("#payment");
+paymentOptions.value="credit card";
+
 //information divs
 let creditCardInfo=document.querySelector("#credit-card");
 let paypalInfo=document.querySelector("#paypal");
@@ -149,6 +154,7 @@ document.querySelector("#payment").addEventListener("change", (e)=>{
 });
 
 //form validation
+let valid=false;
 let name=document.querySelector("#name");
 let email=document.querySelector("#mail");
 let activityError= document.createElement('p');
@@ -167,7 +173,11 @@ let cvvRegex=/^[0-9]{3}$/;//3 digits
 //regex starts with letter,then can include otters, has a @ followed by characters, a dot, then more lettersher charac
 let emailRegex=/^[a-zA-Z][a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]+$/;
 document.querySelector("form").addEventListener("submit", (e)=>{
-    e.preventDefault();
+    //if not valid, dont submit
+    if(!valid){
+        e.preventDefault();
+    }
+
     //name
     if(name.value.length<1){
         name.style.borderColor="red";
