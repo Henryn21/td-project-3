@@ -170,10 +170,22 @@ let zipRegex=/^[0-9]{5}$/;//5 numbers
 let cvv=document.querySelector("#cvv");
 let cvvRegex=/^[0-9]{3}$/;//3 digits
 
+//valid field variables
+let validName=false;
+let validEmail=false;
+let validActivities=false;
+let validCardNumber=false;
+let validZip=false;
+let validCVV=false;
+let validPayment=false;
+
 //regex starts with letter,then can include otters, has a @ followed by characters, a dot, then more lettersher charac
 let emailRegex=/^[a-zA-Z][a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]+$/;
 document.querySelector("form").addEventListener("submit", (e)=>{
+    //check if valid
+    valid=isValid();
     //if not valid, dont submit
+    console.log("Valid is "+valid);
     if(!valid){
         e.preventDefault();
     }
@@ -181,46 +193,78 @@ document.querySelector("form").addEventListener("submit", (e)=>{
     //name
     if(name.value.length<1){
         name.style.borderColor="red";
+        validName=false;
     }
     else{
         name.style.borderColor="#9BBEEF"; 
+        validName=true;
     }
     //email
     if(!emailRegex.test(email.value)){
         email.style.borderColor="red";
+        validEmail=false;
     }
     else{
-        email.style.borderColor="#9BBEEF"; 
+        email.style.borderColor="#9BBEEF";
+        validEmail=true; 
     }
     //activity
     if(totalCost==0){
         activityError.style.display="block";
+        validActivities=false;
     }
     else{
         activityError.style.display="none";
+        validActivities=true;
     }
     //credit card
     //card number
     if(!ccRegex.test(cardNumber.value)){
         cardNumber.style.borderColor="red";
+        validCardNumber=false;
     }
     else{
-        cardNumber.style.borderColor="#9BBEEF"; 
+        cardNumber.style.borderColor="#9BBEEF";
+        validCardNumber=true; 
     }
     //zip
     if(!zipRegex.test(zip.value)){
         zip.style.borderColor="red";
-
+        validZip=false;
     }
     else{
         zip.style.borderColor="#9BBEEF"; 
+        validZip=true;
     }
     //cvv
     if(!cvvRegex.test(cvv.value)){
         cvv.style.borderColor="red";
-
+        validCVV=false;
     }
     else{
-        cvv.style.borderColor="#9BBEEF"; 
+        cvv.style.borderColor="#9BBEEF";
+        validCVV=true; 
+    }
+    //valid payment
+    if(creditCardInfo.style.display=="block"){
+        if(validCVV&&validCardNumber&&validZip){
+            validPayment=true;
+        }
+        else{
+            validPayment=false;
+        }
+    }
+    else{
+        validPayment=true;
     }
 });
+
+//if all fields are fine, set valid to true
+function isValid(){
+    if(validName&&validEmail&&validActivities&&validPayment){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
