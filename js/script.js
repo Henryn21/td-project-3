@@ -189,7 +189,11 @@ document.querySelector("form").addEventListener("submit", (e)=>{
     if(!valid){
         e.preventDefault();
     }
+});
 
+//if all fields are fine, set valid to true
+function isValid(){
+    
     //name
     if(name.value.length<1){
         name.style.borderColor="red";
@@ -257,10 +261,7 @@ document.querySelector("form").addEventListener("submit", (e)=>{
     else{
         validPayment=true;
     }
-});
-
-//if all fields are fine, set valid to true
-function isValid(){
+    //if all are valid
     if(validName&&validEmail&&validActivities&&validPayment){
         return true;
     }
